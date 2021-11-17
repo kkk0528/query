@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+Premain-Class: qk.SizeOfAgent
+Boot-Class-Path:
+Can-Redefine-Classes: false
+
+
