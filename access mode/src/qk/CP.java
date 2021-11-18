@@ -36,18 +36,21 @@ public class CP {
          paillierT = pt;
         ZD_size =zd_size;
     }
+    //Creates a random number of idxy splices
     public void Create_sjs(){
         for (int i = 0; i < r.length; i++) {
             r[i] = random.nextInt( 1024*1024+ 1) +0;
         }
 
     }
+    //Creates a random number of keyword
     public void Create_sjs2(){
         for (int i = 0; i < r2.length; i++) {
             r2[i] = random.nextInt( 1024+ 1) +0;
         }
 
     }
+    //    Create random number of query point splicing
     public CipherPub Create_cxdsjs(){
 
         CipherPub CXD_SJS=new CipherPub();
@@ -67,9 +70,11 @@ public class CP {
         return CXD_SJS;
 
     }
+    //cp partial decryption
     public BigInteger PSDEC_PUB1(CipherPub e){
         return paillierT.PSDecryption1(e);
     }
+    //Add random number for idxy
     public CipherPub  Add_sjs(CipherPub IDXYSCORE){
 
         CipherPub IDXYSCORE_SJS=new CipherPub();
@@ -88,6 +93,7 @@ public class CP {
 
          return IDXYSCORE_SJS;
     }
+    //Add random number for keyword
     public CipherPub  Add_sjs_keyword(CipherPub keyword){
 
         CipherPub keyword_SJS=new CipherPub();
@@ -106,7 +112,7 @@ public class CP {
 
         return keyword_SJS;
     }
-
+    //    Remove the difference returned by CSP and the random number of the difference square
     public CipherPub[] Delete_KEYWORD_sjs(List<CipherPub> keyword) {
         CipherPub KEYWORD [] = new CipherPub[6];
         for (int i = 0; i < keyword.size(); i++) {
@@ -118,7 +124,7 @@ public class CP {
         return KEYWORD;
 
     }
-
+    //    Remove the difference returned by CSP and the random number of the difference square
     public List<List <CipherPub>>  Delete_sjs(List<List <CipherPub>> A){//对于E(ID+r1)，E(平方差+sjs)去除随机数
         List<List <CipherPub>> zscore_one_pack  = new ArrayList<>();
         CipherPub R_ER_FANG = paillierT.Encryption((r_ts.multiply(BigInteger.valueOf(2).pow(30)).pow(2)).multiply(BigInteger.TWO).multiply(BigInteger.valueOf(-1)),paillierT.H[0]);
@@ -147,7 +153,7 @@ public class CP {
         }
         return zscore_one_pack;
 }
-
+    //    The first step of comparing the size of CP ciphertext
     public Object[] SLT_one(CipherPub A,CipherPub B){
         CipherPub  slt_CHA = paillierT.Encryption(slt_r1.subtract(slt_r2),paillierT.H[1]);
         SLT.T1 = A.T1.multiply(B.T1.modPow(BigInteger.valueOf(-1),paillierT.nsquare)).multiply(slt_CHA.T1);
@@ -158,6 +164,7 @@ public class CP {
         SLT_TEMP1 [3] = slt_CHA;
         return SLT_TEMP1;
     }
+//    CP build bucket
     public   List<List<CipherPub>> JIAN_TONG (){
 
         List<List<List<List>>> Shuffle_index = new ArrayList<>();
@@ -228,6 +235,7 @@ public class CP {
         }
         return Z_tong;
     }
+    //CP adds random numbers to the upper and lower bounds of the bucket
     public  List<CipherPub[]> cxd_sjs_tong (){
         List<CipherPub[]> cxd_tong = new ArrayList<>();
 
@@ -243,6 +251,7 @@ public class CP {
         }
         return cxd_tong;
     }
+    //Select disturbance sequence
     private static int[] permutation(int n){
         Random rand = new Random();
         int[] permutation = new int[n];

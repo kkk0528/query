@@ -1,34 +1,36 @@
 package qk;
 
 import pufc.CipherPub;
+
 import pufc.PaillierT;
 
+import javax.print.DocFlavor;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 public class CSP {
+
     private PaillierT paillierT;
     private CipherPub[] S = new CipherPub[2];
     private BigInteger[] SLT_1 = new BigInteger[2];
     private BigInteger[] SLT_2 = new BigInteger[2];
 
-
-
     public CSP(PaillierT pt) {
         paillierT = pt;
-
     }
-    //    CSP for partial decryption
+//    CSP for partial decryption
     public BigInteger PSDEC_PUB2(CipherPub F) {
         return  paillierT.PSDecryption2(F);
     }
-    //    CSP decrypts all
+//    CSP decrypts all
     public BigInteger Quanbu_jiemi(BigInteger sj[]){
         BigInteger  Min_wen = paillierT.DDecryption(sj);
         return  Min_wen;
     }
-    //    CSP is divided into  r1id|r2x|r3y.....
+//    CSP is divided into  r1id|r2x|r3y.....
     public  List<List<BigInteger>> Fenge(BigInteger A){
         String Minwen_2jinzhi = A.toString(2);
         int bitNum=1000;
@@ -55,34 +57,11 @@ public class CSP {
 
         return IDXY_fenge_jihe;
     }
-    //    CSP is divided into keyword|keyword
-    public  List<CipherPub> Fenge_KEYWORD(BigInteger A){
-
-
-        String Minwen_2jinzhi = A.toString(2);
-        int bitNum=120;
-        int a =Minwen_2jinzhi.length();
-        while(Minwen_2jinzhi.length() < bitNum) {
-            Minwen_2jinzhi = "0" + Minwen_2jinzhi;
-        }
-        List<Integer> KEYWORD =new ArrayList<>();
-
-        for (int i = 0; i < Minwen_2jinzhi.length()/20; i++) {
-            String idxy =Minwen_2jinzhi.substring(20*i,20*(i+1));
-            KEYWORD.add(Integer.parseInt(idxy,2) );
-        }
-        List<CipherPub> minwen_fenge_sjs =new ArrayList<>();
-        for (int i = 0; i < KEYWORD.size(); i++) {
-            minwen_fenge_sjs.add(paillierT.Encryption(BigInteger.valueOf(KEYWORD.get(i)),paillierT.H[0]));
-        }
-        return minwen_fenge_sjs;
-    }
-    //    CSP is divided into  xy|xy.....
+//    CSP is divided into  xy|xy.....
     public  List<List<BigInteger>> Fenge_xyxy(BigInteger A){
-
-
         String Minwen_2jinzhi = A.toString(2);
         int bitNum = 800;
+        int a =Minwen_2jinzhi.length();
         while(Minwen_2jinzhi.length() < bitNum) {
             Minwen_2jinzhi = "0" + Minwen_2jinzhi;
         }
@@ -105,7 +84,7 @@ public class CSP {
         return XYXY_fenge_jihe;
     }
 
-    //    CSP ciphertext size comparison step 2
+//    CSP ciphertext size comparison step 2
     public Integer slt_two(Object A[]){
         SLT_1[0] = PSDEC_PUB2((CipherPub) A[2]);
         SLT_1[1] = (BigInteger) A[0];
@@ -114,6 +93,5 @@ public class CSP {
        int res =  Quanbu_jiemi(SLT_1).compareTo(Quanbu_jiemi(SLT_2));
         return res;
     }
-
 
 }

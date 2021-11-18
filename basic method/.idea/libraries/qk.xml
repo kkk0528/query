@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="qk">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/src/qk/agent.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/qk/java-sizeof-0.0.5.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
